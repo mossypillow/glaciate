@@ -1,0 +1,9 @@
+aws_credentials:
+    aws_host:
+        aws_username: insert AWS account username here
+        aws_password: insert AWS account here
+    
+
+         
+
+ 

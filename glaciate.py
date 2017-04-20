@@ -27,6 +27,10 @@ def logger(payload):
         f.write("%s %s \n" % (payload, cur_time))
         f.close()
 
+def dump2json(jsonfile):
+    with open('files.txt', 'w') as outfile:
+        json.dump(jsonfile, outfile)
+
 # load options from config file
 # with open('config.json') as data_file:
 #     data = json.load(data_file)
@@ -45,10 +49,24 @@ def logger(payload):
 # keep human readible log of files sent to glacier
 # if fileisnew then:
 
-for file in os.listdir(os.getcwd()):
-    print(file)
 
-filename = os.path.basename("bigfile.avi")
+filedict = dict()
+
+for file in os.listdir(os.getcwd()):
+    try:
+        if os.path.isfile(file):
+            filedict[file] = hashing(file)
+        else:
+            continue
+    except KeyError:
+        payload = "File %s already exists in system" % (file)
+        logger(payload)
+
+dump2json(filedict)
+
+
+
+# filename = os.path.basename("bigfile.avi")
 
 payload = "%s %s" % (filename, hashing(filename))
 

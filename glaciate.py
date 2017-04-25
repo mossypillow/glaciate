@@ -4,9 +4,9 @@ import base64
 import boto3
 import json
 import os
+from to_s3 import to_s3
 from time import gmtime, strftime
 from hasher import hashing
-import paramiko
 from pprint import pprint
 
 def timestamp():
@@ -31,24 +31,20 @@ def dump2json(jsonfile):
     with open('files.txt', 'w') as outfile:
         json.dump(jsonfile, outfile)
 
-# load options from config file
-# with open('config.json') as data_file:
-#     data = json.load(data_file)
-# pprint(data)
+def get_s3():
+    s3 = boto3.resource('s3')
+    try:
+        s3.meta.client.download_file('12345supertestbucket', 'tmp_payload.json', '/tmp/test.json')
+    except:
+        continue
+
 
 # AccessKey = data["AWS_Access_Key_ID"]
 # SecretKey = data["AWS_Secret_Access_Key"]
 
 # Test to see if you can authenticate to AWS
 
-# key = paramiko.RSAKey(data=base64.b64decode(b'rsakey'))
-
 # check local file system for changes (new files or update files)
-
-
-# keep human readible log of files sent to glacier
-# if fileisnew then:
-
 
 filedict = dict()
 
@@ -62,15 +58,24 @@ for file in os.listdir(os.getcwd()):
         payload = "File %s already exists in system" % (file)
         logger(payload)
 
+# take filenames from json document
+
 dump2json(filedict)
 
+# compare filedict to json dump from S3.
 
+get_s3()
+f = open('/tmp/tmp_payload.json') as data_file:
+    data = json.load(
+
+to_s3(filedict)
+
+# check to see if files exist in AWS
 
 # filename = os.path.basename("bigfile.avi")
 
-payload = "%s %s" % (filename, hashing(filename))
-
-logger(payload)
+#payload = "%s %s" % (filename, hashing(filename))
+#logger(payload)
 
 # hash files to be transferred keep
 # hasher(file)

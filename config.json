@@ -1,11 +1,5 @@
 {
-  "aws_credentials":
-    {
-    "aws_host":
-      {
-        "aws_username": "insert AWS account username here",
-        "aws_password": "insert AWS account here"
-      }
-    }
-
+        "AWS_Access_Key_ID": "insert AWS Access Key ID here",
+        "AWS_Secret_Access_Key": "insert AWS Secret Access Key here"
+        "AWS_Server": "insert remote AWS server here"
 }
